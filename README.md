@@ -1,6 +1,6 @@
 # Prioritized_Dueling_Network2
 
-The goal of this project is to predict stock price movement from day t up and until day t+1 as a percentage. This change is predicted based on candlestick imagery. We have found no evidence that this approach works consistently, but users might change parameter setting to obtain better results. In this project, models are trained and tested to evaluate performance.
+The goal of this project is to evaluate the ability of Convolutional Neural Networks (CNNs) to predict stock price movements based on candlestick imagery. The stock price movements are expressed as the percentage change from day t up and until day t+1. Candlestick imagery is created with a user-specified number of candlesticks ending at day t. We have found no evidence that this approach generates above average returns consistently, but users might change parameter setting to obtain better results. The CNNs are combined with a reinforcement learning framework called the Prioritized Dueling Double Deep Q-learning Network (PDN).
 
 -Plot.py
 This file creates candlestick images of stock/index data. In this case, candlestick images are created for the S&P500 index (^GSPC) and the daily percentage changes are stored. Feel free to add or remove stocks/indices in the list 'SYMBOLS'. 
@@ -24,7 +24,7 @@ The output of this file is:
 
 
 -PDN.py
-This file runs a Prioritized Dueling Double Deep Q-learning Network (PDN). This Reinforcement Learning model takes candlestick images as input and outputs Q-values. The Q-values can be used to select the most appropriate action. In this file, the model is trained and tested on the data created by the Plot.py file. 
+This file runs the Prioritized Dueling Double Deep Q-learning Network (PDN). This Reinforcement Learning model takes candlestick images as input and outputs Q-values. The Q-values can be used to select the most appropriate action (i.e. take a long, neutral or short position). In this file, the model is trained and tested on the data created by the Plot.py file. 
 
 The parameters (under #PARAMETER SELECTION-----) which can be adjusted by the user include:
 1. RUNS:          an integer indicating the number of models trained and tested with varying initialization parameters
