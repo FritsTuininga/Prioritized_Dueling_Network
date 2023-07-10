@@ -23,9 +23,10 @@ def normaliser(data):
     #reset window index
     return output.reset_index(drop=True)
 
-#parameter selection (train: 01-01-2013 ; 31-12-2019)
-SYMBOLS = ["^GSPC"]#"AAPL", "AMZN", "MSFT", "GOOGL", "META", "ADBE", "BRK-B", "JPM", "JNJ", "V", "UNH", "PG", "DIS", "HD", "MA", "BAC", "XOM", "KO", "INTC", "T", "WMT", "BA", "CMCSA", "CSCO", "CVX", "MRK", "PEP", "PFE", "VZ", "WFC"]
+#parameter selection
+SYMBOLS = ["^GSPC"]
 TYPE = "Test"
+CANDLES = 28
 START_DAY = 31
 START_MONTH = 12
 START_YEAR = 2019
@@ -51,7 +52,7 @@ for symbol in tqdm(SYMBOLS):
     #import data
     df = yf.download(
             symbol,
-            start=datetime(START_YEAR, START_MONTH, START_DAY)-BDay(29),
+            start=datetime(START_YEAR, START_MONTH, START_DAY)-BDay(CANDLES+1),
             end=datetime(END_YEAR, END_MONTH, END_DAY)+BDay(1),
             interval='1d',
             progress=False
@@ -67,12 +68,12 @@ for symbol in tqdm(SYMBOLS):
     for i in tqdm(range(N)):
         
         #create window
-        window = normaliser(df[i:i+28].copy())
+        window = normaliser(df[i:i+CANDLES].copy())
         
         #copy white canvas
         canvas = fig.copy()
     
-        for j in range(28):
+        for j in range(CANDLES):
     
             #calculate body of the candle
             body = window["Close"][j] - window["Open"][j]
@@ -118,7 +119,7 @@ for symbol in tqdm(SYMBOLS):
         images.append(transform(canvas.copy()))
         
         #append labels with percental change of this day to the next
-        labels.append(torch.tensor([(df["Close"][i+28]-df["Close"][i+27])/df["Close"][i+27]]))
+        labels.append(torch.tensor([(df["Close"][i+CANDLES]-df["Close"][i+CANDLES-1])/df["Close"][i+CANDLES-1]]))
     
     #store images and targets
     dump(torch.stack(images, dim=0), f"{path}\\{symbol}_X.joblib")
