@@ -46,7 +46,7 @@ def plot(x, title="MSE Loss", label="Error", xlabel="Epochs", ylabel="Error"):
     plt.show()
 
 '''
-This class describes a Convolutional Neural Network to analyze candlestick plots and decide which action would generate
+This class describes a Convolutional Neural Network to analyze candlestick plots and predict which action would generate
 the greatest return. Actions are (0,1,2) or short, neutral, long.
 '''
 
