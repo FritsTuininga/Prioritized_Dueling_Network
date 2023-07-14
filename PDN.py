@@ -11,9 +11,21 @@ import matplotlib.pyplot as plt
 from joblib import load, dump
 from tqdm import tqdm
 
+'''
+This code applies a Prioritized Dueling Double Deep Q-learning Network (PDN) to candlestick images with the aim of 
+predicting stock movements in the following day. 
+'''
+
 #set seed
 torch.manual_seed(42)
 torch.cuda.manual_seed(42)
+
+''''
+Input: x (list), title (string), label (string), xlabel (string) and ylabel (string)
+Output: plot
+
+This function plots the MSE loss over the number of epochs
+'''
 
 def plot(x, title="MSE Loss", label="Error", xlabel="Epochs", ylabel="Error"):
     
@@ -32,6 +44,11 @@ def plot(x, title="MSE Loss", label="Error", xlabel="Epochs", ylabel="Error"):
         
     #show plot
     plt.show()
+
+'''
+This class describes a Convolutional Neural Network to analyze candlestick plots and decide which action would generate
+the greatest return. Actions are (0,1,2) or short, neutral, long.
+'''
 
 class CNN(nn.Module):
     def __init__(self,
@@ -115,6 +132,10 @@ class CNN(nn.Module):
         #get final prediction
         return q
 
+'''
+This class describes the Experience Replay which is used to store and sample states, actions and rewards.
+'''
+
 class ExperienceReplay():
     def __init__(self):
         
@@ -165,6 +186,11 @@ class ExperienceReplay():
         
         #convert to tensor
         return torch.stack(probs, dim=0)
+
+'''
+This class describes the Agent class which takes actions given the state it finds itself in and calculates Q-values
+for update purposes.
+'''
 
 class Agent():
     def __init__(self):
@@ -217,7 +243,11 @@ class Agent():
         #get prediction and do not accumulate gradients
         with torch.no_grad():
             return model(states_batch)
-    
+
+'''
+This class describes the environment and update step of the PDN algorithm.
+'''
+
 class Fit():
     def __init__(self):
         

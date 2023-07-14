@@ -8,6 +8,21 @@ from joblib import dump
 from tqdm import tqdm
 from PIL import Image
 
+'''
+This code extracts stock data from yahoo finance and transforms it into candlestick images. Let 'c' be an integer
+specified by the user and 't' an integer representing the time step such that 1<=t<=T, then candlestick images include 
+stock data from day t-c up and until day t. All candlestick images and the associated percentage change from day t up
+and until day t+1 are stored locally.
+'''
+
+'''
+Input: pandas dataframe
+Output: normalized pandas dataframe
+
+This function normalizes a dataframe with columns 'Open', 'Close', 'Low' and 'High'.
+Values are normalized by taking the maximum value of column 'High' (x_high) and minimum value of column 'Low' (x_low), then:
+x_norm = (x - x_min)/(x_max - x_min)
+'''
 def normaliser(data):
 
     #get maximum and minimum of highs and lows in 28 days
