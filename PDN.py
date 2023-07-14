@@ -13,7 +13,7 @@ from tqdm import tqdm
 
 '''
 This code applies a Prioritized Dueling Double Deep Q-learning Network (PDN) to candlestick images with the aim of 
-predicting stock movements in the following day. 
+predicting the most beneficial position to take for the next day (i.e. long, neutral or short position).
 '''
 
 #set seed
